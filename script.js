@@ -16,21 +16,44 @@ function sideBarController() {
 }
 
 
-document.addEventListener('alpine:init', () => {
 
-    
+
+
+document.addEventListener('alpine:init', () => {
     Alpine.store('sidebar', {
         isOpen: false,
         toggle() {
+            const el = document.getElementById('mobile-sidebar');
+
+            if (!this.isOpen) {
+                el.style.display = 'block';
+                el.classList.add('opacity-0', 'transition', 'duration-500');
+                
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        el.classList.remove('opacity-0');
+                    });
+                });
+            } else {
+                el.classList.add('opacity-0');
+                setTimeout(() => {
+                    el.style.display = 'none';
+                }, 500);
+            }
+
             this.isOpen = !this.isOpen;
         }
     });
-
 });
+
+
+
 
 /**
  * scrol animation for details page
  */
+
+
 function sectionAnimation() {
     return {
         visible: false,
