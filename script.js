@@ -1,3 +1,5 @@
+
+
 // sidebar
 
 function sideBarController() {
@@ -144,3 +146,58 @@ function toggleSizeMenu(){
 
     }
 }
+
+
+//filter migamenu for filter button from products.html
+
+function modalHandler() {
+  return {
+    isOpen: false,
+    open() {
+      this.isOpen = true;
+    },
+    close() {
+      this.isOpen = false;
+    },
+    toggle() {
+      this.isOpen = !this.isOpen;
+    }
+  };
+}
+
+
+// header function
+function smartHeader(offset = 80) {
+  return {
+    lastScroll: 0,
+    hidden: false,
+    offset,
+    init() {
+      
+      this.lastScroll = window.pageYOffset;
+      window.addEventListener('scroll', () => this.handleScroll());
+    },
+    handleScroll() {
+      const currentScroll = window.pageYOffset;
+      
+      
+      if (currentScroll <= this.offset) {
+        this.hidden = false;
+      } 
+      
+      else if (currentScroll > this.lastScroll) {
+        this.hidden = true;
+      } 
+      
+      else if (currentScroll < this.lastScroll) {
+        this.hidden = false;
+      }
+
+      
+      this.lastScroll = currentScroll;
+    }
+  }
+}
+
+
+

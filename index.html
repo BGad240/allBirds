@@ -95,7 +95,11 @@
   </head>
 
   <body class="bg-stone-200 grid gap-10">
-    <header class="fixed flex items-center justify-between top-[30px] md:top-[40px] left-[5%] md:left-[2.5%] w-[90%] md:w-[95%] mx-auto bg-white  h-[50px] rounded-2xl px-[20px] z-[100]">
+    <header
+    x-data="smartHeader(100)" 
+    x-init="init()"
+    :class="hidden ? '-translate-y-[100px]' : 'translate-y-0'"
+     class="fixed flex items-center justify-between top-[30px] md:top-[40px] left-[5%] md:left-[2.5%] w-[90%] md:w-[95%] mx-auto bg-white  h-[50px] rounded-2xl px-[20px] z-[100]">
       <div  x-data @click="$store.sidebar.toggle()"
         class="md:hidden ">
         <div class="relative w-6 h-6">
