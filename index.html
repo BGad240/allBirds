@@ -95,18 +95,18 @@
   </head>
 
   <body class="bg-stone-200 grid gap-10">
-    <header x-data="{cartOpen = false}" class="fixed flex items-center justify-between top-[30px] md:top-[40px] left-[5%] md:left-[2.5%] w-[90%] md:w-[95%] mx-auto bg-white  h-[50px] rounded-2xl px-[20px] z-[100]">
+    <header class="fixed flex items-center justify-between top-[30px] md:top-[40px] left-[5%] md:left-[2.5%] w-[90%] md:w-[95%] mx-auto bg-white  h-[50px] rounded-2xl px-[20px] z-[100]">
       <div  x-data @click="$store.sidebar.toggle()"
         class="md:hidden ">
         <div class="relative w-6 h-6">
-          <div class="absolute inset-0" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 rotate-90" x-transition:enter-end="opacity-100 rotate-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 rotate-0" x-transition:leave-end="opacity-0 -rotate-90">
+          <div class="absolute inset-0">
             <svg class="size-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <line stroke="currentColor" stroke-width="1.5" x1="4" y1="7.5" x2="20" y2="7.5"></line>
               <line stroke="currentColor" stroke-width="1.5" x1="4" y1="12" x2="20" y2="12"></line>
               <line stroke="currentColor" stroke-width="1.5" x1="4" y1="16.5" x2="16" y2="16.5"></line>
             </svg>
           </div>
-          <div x-show="" class="absolute inset-0" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -rotate-90" x-transition:enter-end="opacity-100 rotate-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 rotate-0" x-transition:leave-end="opacity-0 rotate-90" style="display: none;">
+          <div class="absolute inset-0" style="display: none;">
             <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -142,7 +142,7 @@
 
       <div class="content flex gap-3">
         <span class="hidden md:inline-block"><i class="fi fi-rr-user"></i></span>
-        <span @click="$store.cart.show()">
+        <span x-data @click="$store.cart.toggle()">
           <i class="fi fi-rr-shopping-cart"></i>
         </span>
       </div>
@@ -1029,7 +1029,7 @@
 
 
 
-    <div  x-data x-show="$store.sidebar.isOpen" class="w-full bg-stone-200 fixed inset-0 z-50 overflow-hidden transition-all duraiton-700" style="display: none;">
+    <div  x-data x-show="$store.sidebar.isOpen" class="w-full bg-stone-200 fixed inset-0 z-50 overflow-hidden " style="display: none;">
       <div id="mobile-sidebar" x-data="sideBarController()" class=" w-full bg-stone-200 fixed inset-0 z-[51] px-[30px] ">
 
         <!-- المستوى الأول - Main -->
@@ -1177,16 +1177,16 @@
     </div>
 
 
-
+<!--  x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform translate-x-full" x-transition:enter-end="transform translate-x-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0" x-transition:leave-end="transform translate-x-full" -->
 
     <!-- cart modal -->
     <div x-data x-show="$store.cart.open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 z-[101]" style="display: none;">
-      <div @click.away="$store.cart.hide()" class=" fixed right-0 top-0 bg-white h-screen w-full md:w-[480px] shadow-lg flex flex-col" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform translate-x-full" x-transition:enter-end="transform translate-x-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0" x-transition:leave-end="transform translate-x-full">
+      <div @click.away="$store.cart.toggle()" class=" fixed right-0 top-0 bg-white h-screen w-full md:w-[480px] shadow-lg flex flex-col">
         <div class=" border-b p-4 flex flex-col gap-3">
           <div class="flex justify-between items-center ">
             <h2 class="font-bold text-sm">CART (2)</h2>
             <p class="text-xs text-gray-600">You've earned free shipping!</p>
-            <button @click="$store.cart.hide()" class="text-2xl text-gray-500 hover:text-black">
+            <button @click="$store.cart.toggle()" class="text-2xl text-gray-500 hover:text-black">
               &times;
             </button>
           </div>
@@ -1330,7 +1330,10 @@
         </div>
       </div>
 
-      <div @click.away="$store.cart.hide()" class="hidden fixed right-0 top-0 bg-white h-screen w-full md:w-[480px] shadow-lg flex flex-col gap-[40px]" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform translate-x-full" x-transition:enter-end="transform translate-x-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0" x-transition:leave-end="transform translate-x-full">
+
+
+      <!-- if cart is empty -->
+      <div @click.away="$store.cart.hide()" class="hidden fixed right-0 top-0 bg-white h-screen w-full md:w-[480px] shadow-lg flex flex-col gap-[40px]">
         <div class=" border-b p-4 flex flex-col gap-3">
           <div class="flex justify-between items-center ">
             <h2 class="font-bold text-sm">CART (0)</h2>
@@ -1357,7 +1360,7 @@
 
 
     <!-- mega menu -->
-    <div id="mega-menu-modal" x-data x-show="$store.megaMenu.open" x-transition class="fixed inset-0 bg-black/60 z-50 flex justify-center hidden">
+    <div id="mega-menu-modal" x-data x-show="$store.megaMenu.open" class="fixed inset-0 bg-black/60 z-50 flex justify-center hidden">
 
       <div class="absolute inset-0 z-0" @click="$store.megaMenu.hide()"></div>
 

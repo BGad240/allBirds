@@ -81,12 +81,6 @@ document.addEventListener('alpine:init', () => {
         open: false,
         toggle() {
             this.open = !this.open;
-        },
-        show() {
-            this.open = true;
-        },
-        hide() {
-            this.open = false;
         }
     });
 });
