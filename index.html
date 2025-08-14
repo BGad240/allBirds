@@ -126,7 +126,7 @@
           </defs>
         </svg>
       </div>
-      <nav class="hidden md:block">
+      <nav x-data class="hidden md:block">
         <ul class="flex items-center gap-4 text-sm font-semibold text-[#232323] hover:text-slate-600 transition-colors">
           <li class="hover:text-[#232323]">
             <button @click="$store.megaMenu.show()">MEN</button>
@@ -450,30 +450,21 @@
       <section class=" overflow-hidden py-[155px]">
 
 
-        <div x-data="{ activeTab: 'new_arrivals' }">
+        <div x-data="tabsHandler('new_arrivals')">
           <div class="w-full flex items-center justify-center px-[4px] sm:px-4">
 
             <div class="flex items-center justify-center sm:gap-4 md:gap-8 text-[10px] sm:text-base">
 
-              <button @click="activeTab = 'new_arrivals'" :class="{
-                              'text-gray-900 border-gray-800': activeTab === 'new_arrivals',
-                              'text-gray-500 border-transparent': activeTab !== 'new_arrivals'
-                          }" class=" text-[10px] sm:text-sm md:text-base tracking-normal md:tracking-widest uppercase font-semibold border-b-2 pb-2 px-2 md:px-3 transition-all duration-300 whitespace-nowrap">
+              <button @click="setActive('new_arrivals')" :class="tabClass('new_arrivals')" class=" text-[10px] sm:text-sm md:text-base tracking-normal md:tracking-widest uppercase font-semibold border-b-2 pb-2 px-2 md:px-3 transition-all duration-300 whitespace-nowrap">
                 New Arrivals
 
               </button>
 
-              <button @click="activeTab = 'bestsellers'" :class="{
-                              'text-gray-900 border-gray-800': activeTab === 'bestsellers',
-                              'text-gray-500 border-transparent': activeTab !== 'bestsellers'
-                          }" class="text-[10px] sm:text-sm md:text-base tracking-normal md:tracking-widest uppercase font-semibold border-b-2 pb-2 px-2 md:px-3 transition-all duration-300 whitespace-nowrap">
+              <button @click="setActive('bestsellers')" :class="tabClass('bestsellers')" class="text-[10px] sm:text-sm md:text-base tracking-normal md:tracking-widest uppercase font-semibold border-b-2 pb-2 px-2 md:px-3 transition-all duration-300 whitespace-nowrap">
                 Bestsellers
               </button>
 
-              <button @click="activeTab = 'summer_shoes'" :class="{
-                              'text-gray-900 border-gray-800': activeTab === 'summer_shoes',
-                              'text-gray-500 border-transparent': activeTab !== 'summer_shoes'
-                          }" class="text-[10px] sm:text-sm md:text-base tracking-normal md:tracking-widest uppercase font-semibold border-b-2 pb-2 px-2 md:px-3 transition-all duration-300 whitespace-nowrap">
+              <button @click="setActive('summer_shoes')" :class="tabClass('summer_shoes')" class="text-[10px] sm:text-sm md:text-base tracking-normal md:tracking-widest uppercase font-semibold border-b-2 pb-2 px-2 md:px-3 transition-all duration-300 whitespace-nowrap">
                 Summer Shoes
               </button>
 
@@ -1177,10 +1168,9 @@
     </div>
 
 
-<!--  x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform translate-x-full" x-transition:enter-end="transform translate-x-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0" x-transition:leave-end="transform translate-x-full" -->
 
     <!-- cart modal -->
-    <div x-data x-show="$store.cart.open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 z-[101]" style="display: none;">
+    <div x-data x-show="$store.cart.open" class="fixed inset-0 bg-black bg-opacity-50 z-[101]" style="display: none;"  x-transition.opacity>
       <div @click.away="$store.cart.toggle()" class=" fixed right-0 top-0 bg-white h-screen w-full md:w-[480px] shadow-lg flex flex-col">
         <div class=" border-b p-4 flex flex-col gap-3">
           <div class="flex justify-between items-center ">

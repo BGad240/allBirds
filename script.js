@@ -1,4 +1,4 @@
-// side
+// sidebar
 
 function sideBarController() {
     return {
@@ -107,3 +107,40 @@ document.addEventListener('alpine:init', () => {
         }
     });
 });
+
+
+
+// active tabs
+
+ function tabsHandler(defaultTab) {
+    return {
+      activeTab: defaultTab,
+      setActive(tab) {
+        this.activeTab = tab;
+      },
+      tabClass(tab) {
+        return this.activeTab === tab
+          ? 'text-gray-900 border-gray-800'
+          : 'text-gray-500 border-transparent';
+      },
+    }
+}
+
+
+
+// explore products details section in details.html
+
+function toggleSizeMenu(){
+    return{
+        isOpen: false,
+        toggle(){
+            this.isOpen = !this.isOpen
+        },
+        hide(){
+            this.isOpen = false
+        },
+        transitionIn: "transition ease-out duration-500 opacity-100 scale-100",
+        transitionOut: "transition ease-in duration-75 opacity-0 scale-95"
+
+    }
+}
